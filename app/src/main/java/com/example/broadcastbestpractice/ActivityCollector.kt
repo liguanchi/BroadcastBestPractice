@@ -27,7 +27,7 @@ object ActivityCollector {
     /**
      * 销毁所有的Activity
      */
-    fun finishAll(activity: Activity) {
+    fun finishAll() {
         for (activity in activities) {
             if (!activity.isFinishing) {
                 activity.finish()
