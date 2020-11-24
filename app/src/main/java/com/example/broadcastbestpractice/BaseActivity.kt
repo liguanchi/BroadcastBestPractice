@@ -8,7 +8,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 
-open class BaseActivity: AppCompatActivity() {
+open class BaseActivity : AppCompatActivity() {
     lateinit var receiver: BroadcastReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +24,7 @@ open class BaseActivity: AppCompatActivity() {
         super.onResume()
         val intentFilter = IntentFilter("com.example.broadcastbestpractice.FORCS_OFFLINE")
         receiver = ForceOfflineReceiver()
-        registerReceiver(receiver,intentFilter)
+        registerReceiver(receiver, intentFilter)
     }
 
     /**
@@ -40,20 +40,32 @@ open class BaseActivity: AppCompatActivity() {
         ActivityCollector.removeActivity(this)
     }
 
-    inner class ForceOfflineReceiver:BroadcastReceiver(){
+    inner class ForceOfflineReceiver : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-           AlertDialog.Builder(context).apply {
-               setTitle("强制下线通知")
-               setMessage("您已被下线，如果非本人操作，请尽快更改密码")
-               setCancelable(false)
-               setPositiveButton("确定"){_,_->
-                   //重新开启登录界面
-                   ActivityCollector.finishAll()
-                   val i = Intent(context,LoginActivity::class.java)
-                   context.startActivity(i)
-               }
-               show()
-           }
+            AlertDialog.Builder(context).apply {
+                setTitle("强制下线通知")
+                setMessage("您已被下线，如果非本人操作，请尽快更改密码")
+                setCancelable(false)
+                setPositiveButton("确定") { _, _ ->
+                    //重新开启登录界面
+                    ActivityCollector.finishAll()
+                    val i = Intent(context, LoginActivity::class.java)
+                    context.startActivity(i)
+                }
+                show()
+            }
+
+//            val a = AlertDialog.Builder(context)
+//            a. setTitle("强制下线通知")
+//            a. setMessage("您已被下线，如果非本人操作，请尽快更改密码")
+//            a.setCancelable(false)
+//            a. setPositiveButton("确定") { _, _ ->
+//                //重新开启登录界面
+//                ActivityCollector.finishAll()
+//                val i = Intent(context, LoginActivity::class.java)
+//                context.startActivity(i)
+//            }
+//            a.show()
         }
     }
 
